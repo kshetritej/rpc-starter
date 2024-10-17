@@ -12,7 +12,7 @@ async function fetchTotalExpense() {
   const data = await res.json();
   return data;
 }
-export const App = () => {
+export const Index = () => {
 
   const { data, isPending, error } = useQuery({ queryKey: ["total-spent"], queryFn: fetchTotalExpense })
   if (error) { return <div>Error: {error.message}</div> }
