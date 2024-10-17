@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as PageImport } from './routes/page'
+import { Route as ExpensesImport } from './routes/expenses'
+import { Route as CreateExpenseImport } from './routes/create-expense'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
@@ -19,6 +21,16 @@ import { Route as IndexImport } from './routes/index'
 
 const PageRoute = PageImport.update({
   path: '/page',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ExpensesRoute = ExpensesImport.update({
+  path: '/expenses',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreateExpenseRoute = CreateExpenseImport.update({
+  path: '/create-expense',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,6 +62,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/create-expense': {
+      id: '/create-expense'
+      path: '/create-expense'
+      fullPath: '/create-expense'
+      preLoaderRoute: typeof CreateExpenseImport
+      parentRoute: typeof rootRoute
+    }
+    '/expenses': {
+      id: '/expenses'
+      path: '/expenses'
+      fullPath: '/expenses'
+      preLoaderRoute: typeof ExpensesImport
+      parentRoute: typeof rootRoute
+    }
     '/page': {
       id: '/page'
       path: '/page'
@@ -65,12 +91,16 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/create-expense': typeof CreateExpenseRoute
+  '/expenses': typeof ExpensesRoute
   '/page': typeof PageRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/create-expense': typeof CreateExpenseRoute
+  '/expenses': typeof ExpensesRoute
   '/page': typeof PageRoute
 }
 
@@ -78,27 +108,33 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/create-expense': typeof CreateExpenseRoute
+  '/expenses': typeof ExpensesRoute
   '/page': typeof PageRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/page'
+  fullPaths: '/' | '/about' | '/create-expense' | '/expenses' | '/page'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/page'
-  id: '__root__' | '/' | '/about' | '/page'
+  to: '/' | '/about' | '/create-expense' | '/expenses' | '/page'
+  id: '__root__' | '/' | '/about' | '/create-expense' | '/expenses' | '/page'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CreateExpenseRoute: typeof CreateExpenseRoute
+  ExpensesRoute: typeof ExpensesRoute
   PageRoute: typeof PageRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CreateExpenseRoute: CreateExpenseRoute,
+  ExpensesRoute: ExpensesRoute,
   PageRoute: PageRoute,
 }
 
@@ -116,6 +152,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/create-expense",
+        "/expenses",
         "/page"
       ]
     },
@@ -124,6 +162,12 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/create-expense": {
+      "filePath": "create-expense.tsx"
+    },
+    "/expenses": {
+      "filePath": "expenses.tsx"
     },
     "/page": {
       "filePath": "page.tsx"
