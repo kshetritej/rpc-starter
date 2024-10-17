@@ -9,6 +9,16 @@ export const Route = createFileRoute('/create-expense')({
   component: CreateExpense,
 })
 
+function FieldInfo({ field }: { field: FieldApi<any, any, any, any> }) {
+  return (
+    <>
+      {field.state.meta.isTouched && field.state.meta.errors.length ? (
+        <em>{field.state.meta.errors.join(", ")}</em>
+      ) : null}
+      {field.state.meta.isValidating ? 'Validating...' : null}
+    </>
+  )
+}
 
 function CreateExpense() {
 
@@ -43,6 +53,7 @@ function CreateExpense() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
+                <FieldInfo field={field} />
               </>
             )} />
 
@@ -57,11 +68,11 @@ function CreateExpense() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(Number(e.target.value))}
                 />
-                {field.state.meta.isTouched &&  <div>{field.state.value}</div>}
+                <FieldInfo field={field} />
               </>
             )} />
           <Button type="submit">Add Expense</Button>
-        </form.Provider>
+        </form>
       </div>
     </div>
   );
